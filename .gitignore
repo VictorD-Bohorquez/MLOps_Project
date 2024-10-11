@@ -1,4 +1,5 @@
 # Data
+/LocalStorage
 /data/external
 /data/interim
 /data/processed
