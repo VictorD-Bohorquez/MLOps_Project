@@ -1,0 +1,24 @@
+stages:
+  data_loading:
+    cmd: python src/stages/data_load.py --config params.yaml
+    deps:
+      - data/raw/data.csv
+      - src/stages/classes/data_manager.py
+    params:
+      - data_load
+      - datasets
+    outs:
+      - data/raw/xtrain.csv
+      - data/raw/xtest.csv
+      - data/raw/ytrain.csv
+      - data/raw/ytest.csv
+  featurize:
+    cmd: python src/featurization.py data/prepared data/features
+    deps:
+      - data/prepared
+      - src/featurization.py
+    params:
+      - featurize.max_features
+      - featurize.ngrams
+    outs:
+      - data/features
