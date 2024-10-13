@@ -1,0 +1,287 @@
+schema: '2.0'
+stages:
+  data_loading:
+    cmd: python src/stages/data_load.py --config params.yaml
+    deps:
+    - path: data/raw/data.csv
+      hash: md5
+      md5: ee29c9ee9ea60654b5bb0a161c0a473d
+      size: 533230
+    - path: src/stages/classes/data_manager.py
+      hash: md5
+      md5: 66bfe7e1f9f14863d0e2ab9b3d2475f3
+      size: 1208
+    params:
+      params.yaml:
+        data_load:
+          dataset: data/raw/data.csv
+          target: Target
+          test: 0.2
+        datasets:
+          path_xtrain: data/raw/xtrain.csv
+          path_ytrain: data/raw/ytrain.csv
+          path_xtest: data/raw/xtest.csv
+          path_ytest: data/raw/ytest.csv
+    outs:
+    - path: data/raw/xtest.csv
+      hash: md5
+      md5: dae9aaa45f7919f27a0dc16872f66703
+      size: 100052
+    - path: data/raw/xtrain.csv
+      hash: md5
+      md5: 16580460005b37b1101a367dab9fef69
+      size: 395641
+    - path: data/raw/ytest.csv
+      hash: md5
+      md5: 11e6253570ebd488d89f05e3fe235ba5
+      size: 8574
+    - path: data/raw/ytrain.csv
+      hash: md5
+      md5: 28d368befb56923ec32b24ef1f455397
+      size: 34261
+  feature_engineering:
+    cmd: python src/stages/feature_engineering.py --config params.yaml
+    deps:
+    - path: data/raw/xtest.csv
+      hash: md5
+      md5: dae9aaa45f7919f27a0dc16872f66703
+      size: 100052
+    - path: data/raw/xtrain.csv
+      hash: md5
+      md5: 16580460005b37b1101a367dab9fef69
+      size: 395641
+    - path: data/raw/ytest.csv
+      hash: md5
+      md5: 11e6253570ebd488d89f05e3fe235ba5
+      size: 8574
+    - path: data/raw/ytrain.csv
+      hash: md5
+      md5: 28d368befb56923ec32b24ef1f455397
+      size: 34261
+    - path: src/stages/classes/feature_manager.py
+      hash: md5
+      md5: f683bd5af60a75cd46b84fb487e739c5
+      size: 4111
+    params:
+      params.yaml:
+        datasets:
+          path_xtrain: data/raw/xtrain.csv
+          path_ytrain: data/raw/ytrain.csv
+          path_xtest: data/raw/xtest.csv
+          path_ytest: data/raw/ytest.csv
+        features:
+          scaler:
+          - Age at enrollment
+          - Unemployment rate
+          - Inflation rate
+          - GDP
+          log:
+          - Previous qualification (grade)
+          - Admission grade
+          - Curricular units 1st sem (credited)
+          - Curricular units 1st sem (enrolled)
+          - Curricular units 1st sem (evaluations)
+          - Curricular units 1st sem (approved)
+          - Curricular units 1st sem (grade)
+          - Curricular units 1st sem (without evaluations)
+          - Curricular units 2nd sem (credited)
+          - Curricular units 2nd sem (enrolled)
+          - Curricular units 2nd sem (evaluations)
+          - Curricular units 2nd sem (approved)
+          - Curricular units 2nd sem (grade)
+          - Curricular units 2nd sem (without evaluations)
+        processed:
+          path_xtrain: data/processed/xtrain.csv
+          path_xtest: data/processed/xtest.csv
+    outs:
+    - path: data/processed/xtest.csv
+      hash: md5
+      md5: 9f2162d5f68406f74504f7921a3e871f
+      size: 796604
+    - path: data/processed/xtrain.csv
+      hash: md5
+      md5: cdb47316006105cb78197c0b0eae8c67
+      size: 3630371
+  model_training:
+    cmd: python src/stages/model_training.py --config params.yaml
+    deps:
+    - path: data/processed/xtrain.csv
+      hash: md5
+      md5: cdb47316006105cb78197c0b0eae8c67
+      size: 3630371
+    - path: data/raw/ytrain.csv
+      hash: md5
+      md5: 28d368befb56923ec32b24ef1f455397
+      size: 34261
+    - path: src/stages/classes/models.py
+      hash: md5
+      md5: 484efadc433e8c6874111750e1eb1b0a
+      size: 3950
+    params:
+      params.yaml:
+        datasets:
+          path_xtrain: data/raw/xtrain.csv
+          path_ytrain: data/raw/ytrain.csv
+          path_xtest: data/raw/xtest.csv
+          path_ytest: data/raw/ytest.csv
+        evaluation:
+          metrics:
+          - accuracy
+          - precision_macro
+          - recall_macro
+          - f1_macro
+          test_data: data/processed/test.csv
+        models:
+          path_models: models/models.sav
+        processed:
+          path_xtrain: data/processed/xtrain.csv
+          path_xtest: data/processed/xtest.csv
+        tuning:
+          parameters:
+            RF:
+              n_estimators:
+              - 50
+              - 100
+              - 200
+              max_depth:
+              - None
+              - 10
+              - 20
+              - 30
+              min_samples_split:
+              - 2
+              - 5
+              - 10
+              criterion:
+              - log_loss
+              - entropy
+              - gini
+              max_features:
+              - sqrt
+              - log2
+              bootstrap:
+              - true
+              - false
+              class_weight:
+              - balanced
+              - balanced_subsample
+            SVC:
+              C:
+              - 0.1
+              - 1
+              - 3
+              - 5
+              gamma:
+              - 0.005
+              - 0.5
+              - 0.05
+              - 0
+              - 0.01
+              kernel:
+              - linear
+              - rbf
+            KNN:
+              n_neighbors:
+              - 3
+              - 5
+              - 9
+              - 12
+              - 15
+              - 17
+              - 21
+              weights:
+              - uniform
+              - distance
+              algorithm:
+              - auto
+              - ball_tree
+              - kd_tree
+              leaf_size:
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
+            LR:
+              C:
+              - 1
+              - 5
+              - 10
+              solver:
+              - lbfgs
+              - newton-cg
+              - sag
+              - saga
+            DTree:
+              min_samples_split:
+              - 1
+              - 3
+              - 5
+              - 10
+              max_depth:
+              - 5
+              - 10
+              - 15
+              - 20
+              max_leaf_nodes:
+              - 2
+              - 3
+              - 5
+              - 7
+              - 10
+              criterion:
+              - log_loss
+              - entropy
+              - gini
+              splitter:
+              - best
+              - random
+            MLP:
+              learning_rate_init:
+              - 0.005
+              - 0.001
+              - 0.05
+              - 0.01
+              alpha:
+              - 0.0001
+              - 0.0005
+              - 0.001
+              - 0.005
+              - 0.01
+              - 0.05
+              solver:
+              - lbfgs
+              - sgd
+              - adam
+    outs:
+    - path: models/models.sav
+      hash: md5
+      md5: a8b97dddf63b3429279f54d3d8682f1f
+      size: 61668573
+  evaluation:
+    cmd: python src/stages/evaluation.py --config params.yaml
+    deps:
+    - path: data/processed/xtest.csv
+      hash: md5
+      md5: 9f2162d5f68406f74504f7921a3e871f
+      size: 796604
+    - path: data/raw/ytest.csv
+      hash: md5
+      md5: 11e6253570ebd488d89f05e3fe235ba5
+      size: 8574
+    - path: src/stages/classes/models.py
+      hash: md5
+      md5: 484efadc433e8c6874111750e1eb1b0a
+      size: 3950
+    params:
+      params.yaml:
+        datasets:
+          path_xtrain: data/raw/xtrain.csv
+          path_ytrain: data/raw/ytrain.csv
+          path_xtest: data/raw/xtest.csv
+          path_ytest: data/raw/ytest.csv
+        models:
+          path_models: models/models.sav
+        processed:
+          path_xtrain: data/processed/xtrain.csv
+          path_xtest: data/processed/xtest.csv
