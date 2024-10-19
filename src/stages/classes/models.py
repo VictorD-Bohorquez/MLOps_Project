@@ -1,3 +1,5 @@
+import mlflow
+import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_validate
@@ -22,6 +24,7 @@ class Models():
             self.config = yaml.safe_load(config)
         self.models, self.names = self.generate_models()
         self.params = self.config['tuning']['parameters']
+        self.best = []
     
     def generate_models(self):
         models, names = list(), list()
@@ -33,8 +36,6 @@ class Models():
         names.append('DTree')
         models.append(RandomForestClassifier(n_jobs=-1))
         names.append('RF')
-        models.append(MLPClassifier( hidden_layer_sizes=(20,20),max_iter=10000))
-        names.append('MLP')
         models.append(SVC())
         names.append('SVC')
         return models, names
@@ -50,6 +51,7 @@ class Models():
             result = self.model_grid_search(self.models[i], self.params[self.names[i]], data, y)
             parameters.append(result)
             print(f'Best parameters found for {self.names[i]} : {result}')
+        self.best = parameters
         return parameters
 
     def model_grid_search(self, model, params, X_train, y_train):
@@ -86,9 +88,21 @@ class Models():
         file = self.config['models']['path_models']
         joblib.dump(self.models, file)
 
-    def evaluate(self, data, ytest, models):
+    def evaluate(self, data, ytest):
         Xtest = data
-        for i in range(len(models)):
-            y_pred= models[i].predict(Xtest)
+        mlflow.set_experiment("Students_Dropout_Success")
+        for i in range(len(self.models)):
+            y_pred= self.models[i].predict(Xtest)
             print(f"\n>>Reporte final Test de {self.names[i]}:")
             print(classification_report(ytest, y_pred))
+            report = classification_report(ytest, y_pred, output_dict=True)
+            self.log_model(i, report)
+    
+    def log_model(self, index, report):
+        with mlflow.start_run(run_name=self.names[index]):
+            mlflow.log_params(self.best[index])
+            mlflow.log_metric("accuracy", report.pop("accuracy"))
+            for class_or_avg, metrics_dict in report.items():
+                for metric, value in metrics_dict.items():
+                    mlflow.log_metric(class_or_avg + '_' + metric,value)
+            mlflow.sklearn.log_model(self.models[index], artifact_path="models")

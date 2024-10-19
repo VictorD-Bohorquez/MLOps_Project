@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/1731368ecd3047daa56bbfe71f3c752d/artifacts
+end_time: 1729370436157
+entry_point_name: ''
+experiment_id: '119121465528204301'
+lifecycle_stage: active
+run_id: 1731368ecd3047daa56bbfe71f3c752d
+run_name: SVC
+run_uuid: 1731368ecd3047daa56bbfe71f3c752d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729370434584
+status: 3
+tags: []
+user_id: Shiro

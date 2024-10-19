@@ -41,12 +41,14 @@ stages:
       - models
     outs:
       - models/models.sav
+      - models/models_class.sav
   evaluation:
     cmd: python src/stages/evaluation.py --config params.yaml
     deps:
       - data/processed/xtest.csv
       - data/raw/ytest.csv
       - src/stages/classes/models.py
+      - models/models_class.sav
     params:
       - processed
       - datasets

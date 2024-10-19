@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/c6485ba31735424cacdaab42b687f574/artifacts
+end_time: 1729370430816
+entry_point_name: ''
+experiment_id: '119121465528204301'
+lifecycle_stage: active
+run_id: c6485ba31735424cacdaab42b687f574
+run_name: KNN
+run_uuid: c6485ba31735424cacdaab42b687f574
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729370429275
+status: 3
+tags: []
+user_id: Shiro
