@@ -115,8 +115,8 @@ stages:
       size: 34261
     - path: src/stages/classes/models.py
       hash: md5
-      md5: 484efadc433e8c6874111750e1eb1b0a
-      size: 3950
+      md5: 4a14a74a84a8ac3e7d9f18f51e543dc2
+      size: 4612
     params:
       params.yaml:
         datasets:
@@ -133,6 +133,7 @@ stages:
           test_data: data/processed/test.csv
         models:
           path_models: models/models.sav
+          path_models_class: models/models_class.sav
         processed:
           path_xtrain: data/processed/xtrain.csv
           path_xtest: data/processed/xtest.csv
@@ -236,28 +237,15 @@ stages:
               splitter:
               - best
               - random
-            MLP:
-              learning_rate_init:
-              - 0.005
-              - 0.001
-              - 0.05
-              - 0.01
-              alpha:
-              - 0.0001
-              - 0.0005
-              - 0.001
-              - 0.005
-              - 0.01
-              - 0.05
-              solver:
-              - lbfgs
-              - sgd
-              - adam
     outs:
     - path: models/models.sav
       hash: md5
-      md5: a8b97dddf63b3429279f54d3d8682f1f
-      size: 61668573
+      md5: 6fb46ee8a836679452e446ad9fed0862
+      size: 46042301
+    - path: models/models_class.sav
+      hash: md5
+      md5: 8792a2a9f26e3aed81c82871fe712fee
+      size: 46060554
   evaluation:
     cmd: python src/stages/evaluation.py --config params.yaml
     deps:
@@ -269,10 +257,14 @@ stages:
       hash: md5
       md5: 11e6253570ebd488d89f05e3fe235ba5
       size: 8574
+    - path: models/models_class.sav
+      hash: md5
+      md5: 8792a2a9f26e3aed81c82871fe712fee
+      size: 46060554
     - path: src/stages/classes/models.py
       hash: md5
-      md5: 484efadc433e8c6874111750e1eb1b0a
-      size: 3950
+      md5: 4a14a74a84a8ac3e7d9f18f51e543dc2
+      size: 4612
     params:
       params.yaml:
         datasets:
@@ -282,6 +274,7 @@ stages:
           path_ytest: data/raw/ytest.csv
         models:
           path_models: models/models.sav
+          path_models_class: models/models_class.sav
         processed:
           path_xtrain: data/processed/xtrain.csv
           path_xtest: data/processed/xtest.csv

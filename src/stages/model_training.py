@@ -3,6 +3,7 @@ import argparse
 import yaml
 import numpy as np
 import pandas as pd
+import joblib 
 
 def train(path):
     with open(path) as con:
@@ -15,6 +16,8 @@ def train(path):
     models.finetune_parameters(Xtrain, ytrain)
     models.validate_models(Xtrain, ytrain)
     models.train_models(Xtrain, ytrain)
+    file = config['models']['path_models_class']
+    joblib.dump(models, file)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Hyperparameters tunning and training processing step.')

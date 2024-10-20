@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/15a8bbf5f85a4c0abb12f17f100eaa62/artifacts
+end_time: 1729370429149
+entry_point_name: ''
+experiment_id: '119121465528204301'
+lifecycle_stage: active
+run_id: 15a8bbf5f85a4c0abb12f17f100eaa62
+run_name: LR
+run_uuid: 15a8bbf5f85a4c0abb12f17f100eaa62
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729370427106
+status: 3
+tags: []
+user_id: Shiro
