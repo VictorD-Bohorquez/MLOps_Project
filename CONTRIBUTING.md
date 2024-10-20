@@ -1,0 +1,1 @@
+Este documento explica cómo los programadores pueden aportar al proyecto, las normas de codificación y el procedimiento para realizar modificaciones. Resulta beneficioso para orientar a futuros colaboradores.
