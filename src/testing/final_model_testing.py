@@ -33,7 +33,7 @@ def test_accuracy(model, x, y):
     limit = float(metrics['metrics']['accuracy'])
     predict = model.predict(x)
     accuracy = accuracy_score(y, predict)
-    assert accuracy >= limit, "Models accuracy should be at least 60%"
+    assert accuracy >= limit, f"Models accuracy should be at least {limit*100}%"
 
 @pytest.mark.parametrize("model,x,y,", inputs)
 def test_avg_precision(model, x, y):
@@ -42,7 +42,7 @@ def test_avg_precision(model, x, y):
     report = classification_report(y, predict, output_dict=True)
     avg_scores = report['macro avg']
     precision = avg_scores['precision']
-    assert precision >= limit, f"Average precision should be at least 50%"
+    assert precision >= limit, f"Average precision should be at least {limit*100}%"
 
 @pytest.mark.parametrize("model,x,y,", inputs)
 def test_avg_recall(model, x, y):
@@ -51,7 +51,7 @@ def test_avg_recall(model, x, y):
     report = classification_report(y, predict, output_dict=True)
     avg_scores = report['macro avg']
     recall = avg_scores['recall']
-    assert recall >= limit, f"Average recall should be at least 50%"
+    assert recall >= limit, f"Average recall should be at least {limit*100}%"
 
 @pytest.mark.parametrize("model,x,y,", inputs)
 def test_weighted_precision(model, x, y):
@@ -60,7 +60,7 @@ def test_weighted_precision(model, x, y):
     report = classification_report(y, predict, output_dict=True)
     avg_scores = report['weighted avg']
     precision = avg_scores['precision']
-    assert precision >= limit, f"Weighted precision should be at least 60%"
+    assert precision >= limit, f"Weighted precision should be at least {limit*100}%"
 
 @pytest.mark.parametrize("model,x,y,", inputs)
 def test_weighted_recall(model, x, y):
@@ -69,4 +69,4 @@ def test_weighted_recall(model, x, y):
     report = classification_report(y, predict, output_dict=True)
     avg_scores = report['weighted avg']
     recall = avg_scores['recall']
-    assert recall >= limit, f"Weighted recall should be at least 60%"
+    assert recall >= limit, f"Weighted recall should be at least {limit*100}%"
