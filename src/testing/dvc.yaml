@@ -1,0 +1,55 @@
+stages:
+  data_loading:
+    cmd: python src/stages/data_load.py --config params.yaml
+    deps:
+      - data/raw/data.csv
+      - src/stages/classes/data_manager.py
+    params:
+      - data_load
+      - datasets
+    outs:
+      - data/raw/xtrain.csv
+      - data/raw/xtest.csv
+      - data/raw/ytrain.csv
+      - data/raw/ytest.csv
+  feature_engineering:
+    cmd: python src/stages/feature_engineering.py --config params.yaml
+    deps:
+      - data/raw/xtrain.csv
+      - data/raw/xtest.csv
+      - data/raw/ytrain.csv
+      - data/raw/ytest.csv
+      - src/stages/classes/feature_manager.py
+    params:
+      - processed
+      - datasets
+      - features
+    outs:
+      - data/processed/xtrain.csv
+      - data/processed/xtest.csv
+  model_training:
+    cmd: python src/stages/model_training.py --config params.yaml
+    deps:
+      - data/processed/xtrain.csv
+      - data/raw/ytrain.csv
+      - src/stages/classes/models.py
+    params:
+      - processed
+      - datasets
+      - tuning
+      - evaluation
+      - models
+    outs:
+      - models/models.sav
+      - models/models_class.sav
+  evaluation:
+    cmd: python src/stages/evaluation.py --config params.yaml
+    deps:
+      - data/processed/xtest.csv
+      - data/raw/ytest.csv
+      - src/stages/classes/models.py
+      - models/models_class.sav
+    params:
+      - processed
+      - datasets
+      - models

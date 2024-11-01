@@ -59,4 +59,3 @@ evaluation:
 models:
   path_models: 'models/models.sav'
   path_models_class: 'models/models_class.sav'
-  path_models_class_RG: 'src/testing/models_class.sav'
