@@ -1,0 +1,6 @@
+metrics:
+  accuracy: 0.6
+  avg_presicion: 0.5
+  avg_recall: 0.5
+  weighted_presicion: 0.6
+  weighted_recall: 0.6
