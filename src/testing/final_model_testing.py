@@ -13,8 +13,6 @@ def load_config(path):
 
 def load_models(path):
     config = load_config(path)
-    #with open(path) as con:
-        #config = yaml.safe_load(con)
     models =  joblib.load(config['models']['path_models']) 
     file = config['processed']['path_xtest']
     Xtest = pd.read_csv(file, sep=';')
