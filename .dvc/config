@@ -1,6 +1,4 @@
 [core]
-    remote = myremote
+    remote = local_remote
 ['remote "local_remote"']
     url = ../LocalStorage
-['remote "myremote"']
-    url = C:\Users\ruben\Documents\remoteStorageDVC
