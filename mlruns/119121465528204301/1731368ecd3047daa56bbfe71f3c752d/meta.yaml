@@ -1,8 +1,9 @@
 artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/1731368ecd3047daa56bbfe71f3c752d/artifacts
+deleted_time: 1731724990900
 end_time: 1729370436157
 entry_point_name: ''
 experiment_id: '119121465528204301'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 1731368ecd3047daa56bbfe71f3c752d
 run_name: SVC
 run_uuid: 1731368ecd3047daa56bbfe71f3c752d

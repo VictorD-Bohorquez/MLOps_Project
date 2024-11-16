@@ -1,8 +1,9 @@
 artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/b867ec82ae3d48f098678c2170d78601/artifacts
+deleted_time: 1731724990900
 end_time: 1729370434268
 entry_point_name: ''
 experiment_id: '119121465528204301'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: b867ec82ae3d48f098678c2170d78601
 run_name: RF
 run_uuid: b867ec82ae3d48f098678c2170d78601
