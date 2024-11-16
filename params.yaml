@@ -59,4 +59,4 @@ evaluation:
 models:
   path_models: 'models/models.sav'
   path_models_class: 'models/models_class.sav'
-  names : ['LR','KNN', 'DTREE', 'RF', 'SVC']
+  names : ['LR','KNN', 'DTree', 'RF', 'SVC']

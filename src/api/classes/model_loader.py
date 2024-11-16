@@ -61,9 +61,10 @@ class Model_Loader():
                         metrics[class_or_avg + '_' + metric] = value
                 response[self.names[i]] = metrics
         else:
-            if name.upper() not in self.names:
+            names = [x.upper() for x in self.names]
+            if name.upper() not in names:
                 return None
-            i = self.names.index(name.upper())
+            i = names.index(name.upper())
             response = {}
             predict = self.models[i].predict(self.X)
             report = classification_report(self.y, predict, output_dict=True)
@@ -87,9 +88,10 @@ class Model_Loader():
                     model_pred[str(i)] = {'prediction':pred[i]}
                 response[name] = model_pred
         else:
-            if model.upper() not in self.names:
+            names = [x.upper() for x in self.names]
+            if model.upper() not in names:
                 return None
-            i = self.names.index(model.upper())
+            i = names.index(model.upper())
             columns = list(self.models[i].feature_names_in_)
             data = data[columns]
             pred = self.models[i].predict(data)
