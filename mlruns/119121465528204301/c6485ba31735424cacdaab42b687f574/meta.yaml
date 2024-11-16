@@ -1,8 +1,9 @@
 artifact_uri: file:///F:/Maestria/MLOps/Proyecto/MLOps_Project/mlruns/119121465528204301/c6485ba31735424cacdaab42b687f574/artifacts
+deleted_time: 1731724990895
 end_time: 1729370430816
 entry_point_name: ''
 experiment_id: '119121465528204301'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: c6485ba31735424cacdaab42b687f574
 run_name: KNN
 run_uuid: c6485ba31735424cacdaab42b687f574

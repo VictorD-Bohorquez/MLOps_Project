@@ -105,4 +105,4 @@ class Models():
             for class_or_avg, metrics_dict in report.items():
                 for metric, value in metrics_dict.items():
                     mlflow.log_metric(class_or_avg + '_' + metric,value)
-            mlflow.sklearn.log_model(self.models[index], artifact_path="models")
+            mlflow.sklearn.log_model(self.models[index], artifact_path="models",registered_model_name=self.names[index])
